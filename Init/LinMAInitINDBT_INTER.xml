@@ -1,0 +1,17 @@
+<matlab instance = 'KPTLInitBT' version='MatrixTrader v2' history='2520'>
+  
+ <db schema = 'dbconfig' 
+      host = '10.40.20.12:3306'  user = 'aletheia'  password = 'x.K]>"!S4p'/>
+  <db schema = 'dbmarket' folder = 'Z:/Aletheia/'/>
+  <db schema = 'dbaccounts' folder = 'Z:/Aletheia/'
+      host = '10.40.20.12:3306'  user = 'aletheia'  password = 'x.K]>"!S4p'/>
+  
+  <marketdata period='S15' marketdata='auto' db='dbmarket'>
+    <symbols serie='INDFUT' name='FULL'>
+      <signals signal='LinearMA' backtest ='false'/>
+      <signals signal='MeanRev_450_4_3' backtest ='false'/>
+    </symbols>
+  </marketdata>
+  
+  
+</matlab>

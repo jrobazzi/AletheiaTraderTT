@@ -1,0 +1,82 @@
+<matlab instance = 'KPTLInitRT' version='MatrixTrader v2' history='250'>
+  
+ <db schema = 'dbconfig' 
+      host = '127.0.0.1:6446'  user = 'traders'  password = 'kapitalo' />
+  <db schema = 'dbmarket' folder = 'H:/DB/'/>
+  <db schema = 'dbaccounts' folder = 'H:/DB/'
+      host = '127.0.0.1:6446'  user = 'traders'  password = 'kapitalo' />
+  
+  <marketdata period='S15' marketdata='MDATGV2' db='dbmarket'>
+    <symbols serie='DOLFUT' name='FULL'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='Filters' backtest ='false'/>
+      <signals signal='Convergence_1080_4_3' backtest ='false'/>
+      <signals signal='Convergence_1800_4_3' backtest ='false'/>
+    </symbols>
+    <symbols serie='DOLFUT' name='MINI'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='Filters' backtest ='false'/>
+      <signals signal='Convergence_1080_4_3' backtest ='false'/>
+      <signals signal='Convergence_1800_4_3' backtest ='false'/>
+    </symbols>
+    <symbols serie='INDFUT' name='FULL'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='Filters' backtest ='false'/>
+      <signals signal='Convergence_540_4_3' backtest ='false'/>
+      <signals signal='Convergence_720_4_3' backtest ='false'/>
+      <signals signal='Convergence_1080_4_3' backtest ='false'/>
+    </symbols>
+    <symbols serie='INDFUT' name='MINI'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='Filters' backtest ='false'/>
+      <signals signal='Convergence_540_4_3' backtest ='false'/>
+      <signals signal='Convergence_720_4_3' backtest ='false'/>
+      <signals signal='Convergence_1080_4_3' backtest ='false'/>
+    </symbols>
+  </marketdata>
+  
+  <riskaccounts account='MASTERKPTL' history='3' from='2019-06-11'
+                simulated='false' db='dbaccounts'> 
+    <riskstrategies strategy='Tendencias_Moedas'>
+      <riskpositions serie='DOLFUT' name='FULL' 
+                     alocation='150000000' stop='0.02' period='1'
+					 position='0' m2m='3279'/>
+    </riskstrategies>
+    <riskstrategies strategy='Convergence_540_4_3'>
+      <riskpositions serie='INDFUT' name='MINI' 
+                     alocation='1000000' stop='0.02' period='0'/>
+      <riskpositions serie='INDFUT' name='FULL' 
+                     alocation='100000000' stop='0.02' period='0'/>
+    </riskstrategies>
+    <riskstrategies strategy='Convergence_720_4_3'>
+      <riskpositions serie='INDFUT' name='MINI' 
+                     alocation='1000000' stop='0.02' period='0'/>
+      <riskpositions serie='INDFUT' name='FULL' 
+                     alocation='100000000' stop='0.02' period='0'/>
+    </riskstrategies>
+    <riskstrategies strategy='Convergence_1080_4_3'>
+      <riskpositions serie='INDFUT' name='MINI' 
+                     alocation='2000000' stop='0.02' period='0'/>
+      <riskpositions serie='INDFUT' name='FULL' 
+                     alocation='200000000' stop='0.02' period='0'/>
+      <riskpositions serie='DOLFUT' name='MINI' 
+                     alocation='880000' stop='0.02' period='0'/>
+      <riskpositions serie='DOLFUT' name='FULL' 
+                     alocation='88000000' stop='0.02' period='0'/>
+    </riskstrategies>
+    <riskstrategies strategy='Convergence_1800_4_3'>
+      <riskpositions serie='DOLFUT' name='MINI' 
+                     alocation='2000000' stop='0.02' period='0'/>
+      <riskpositions serie='DOLFUT' name='FULL' 
+                     alocation='200000000' stop='0.02' period='0'/>
+    </riskstrategies>
+    <oms  oms='VIRTUAL'   db='dbaccounts' active='false'/>
+    <oms  oms='XP_FIXBMF' db='dbaccounts' active='false'/>
+    <oms  oms='GID_FIXBMF' db='dbaccounts' active='true'/>
+  </riskaccounts>
+  
+</matlab>

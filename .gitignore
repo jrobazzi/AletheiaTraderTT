@@ -1,0 +1,11 @@
+desktop.ini
+
+*.xlsx
+*.xlsm
+*.xlsb
+*.dll
+*.mexw64
+*.bak
+*.mat
+
+scottclowe-matlab-schemer-f8115af/*

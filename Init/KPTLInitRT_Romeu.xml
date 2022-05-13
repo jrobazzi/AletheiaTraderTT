@@ -1,0 +1,63 @@
+<matlab instance = 'KPTLInitRT' version='MatrixTrader v2' history='350'>
+  
+ <db schema = 'dbconfig' 
+      host = 'localhost'  user = 'traders'  password = 'kapitalo' />
+  <db schema = 'dbmarket' folder = 'E:/DB/'/>
+  <db schema = 'dbaccounts' folder = 'E:/DB/'
+      host = 'localhost'  user = 'traders'  password = 'kapitalo' />
+  
+  <marketdata period='S15' marketdata='auto' db='dbmarket'>
+    <symbols serie='INDFUT' name='FULL'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+    </symbols>
+    <symbols serie='INDFUT' name='MINI'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='Filters' backtest ='false'/>
+      <signals signal='Convergence_540_4_3' backtest ='false'/>
+      <signals signal='Convergence_720_4_3' backtest ='false'/>
+      <signals signal='Convergence_1080_4_3' backtest ='false'/>
+    </symbols>
+    <symbols symbol='DI1F18'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='Filters' backtest ='false'/>
+    </symbols>
+     <symbols symbol='DI1J18'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='Filters' backtest ='false'/>
+    </symbols>
+  </marketdata>
+  
+  <riskaccounts account='MASTERKPTL' history='3' from='2017-01-01'
+                simulated='false' db='dbaccounts'> 
+    <riskstrategies strategy='TWAPShort'>
+      <riskpositions  symbol='DI1F18' 
+                      alocation='15000000' period='1'
+                      position='-4000' m2m='7.585'/>
+    </riskstrategies>
+    <riskstrategies strategy='TWAPLong'>
+      <riskpositions  symbol='DI1J18' 
+                      alocation='15000000' period='1'
+                      position='-5000' m2m='7.280'/>
+    </riskstrategies>
+    <riskstrategies strategy='Convergence_540_4_3'>
+      <riskpositions serie='INDFUT' name='MINI' 
+                     alocation='11666666' stop='0.02' period='0'/>
+    </riskstrategies>
+    <riskstrategies strategy='Convergence_720_4_3'>
+      <riskpositions serie='INDFUT' name='MINI' 
+                     alocation='11666666' stop='0.02' period='0'/>
+    </riskstrategies>
+    <riskstrategies strategy='Convergence_1080_4_3'>
+      <riskpositions serie='INDFUT' name='MINI' 
+                     alocation='11666666' stop='0.02' period='0'/>
+    </riskstrategies>
+    <oms  oms='VIRTUAL'   db='dbaccounts' active='false'/>
+    <oms  oms='XP_FIXBMF' db='dbaccounts' active='false'/>
+    <oms  oms='GID_FIXBMF' db='dbaccounts' active='true'/>
+  </riskaccounts>
+  
+</matlab>

@@ -1,0 +1,78 @@
+<matlab instance = 'ATInitRT' version='AletheiaTrader v1.0' history='60'>
+  
+ <db schema = 'dbconfig' 
+      host = '10.40.20.12:3306'  user = 'aletheia'  password = 'x.K]>"!S4p' />
+  <db schema = 'dbmarket' folder = 'Z:/Aletheia/'/>
+  <db schema = 'dbaccounts' folder = 'Z:/Aletheia/'
+      host = '10.40.20.12:3306'  user = 'aletheia'  password = 'x.K]>"!S4p' />
+  
+  <marketdata period='S15' marketdata='auto' db='dbmarket'>
+    <symbols serie='INDFUT' name='FULL'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='LinearMA' backtest ='false'/>
+      <signals signal='MeanRev_360_4_3' backtest ='false'/>
+      <signals signal='MeanRev_450_4_3' backtest ='false'/>
+      <signals signal='MeanRev_690_4_3' backtest ='false'/>
+    </symbols>
+    <symbols serie='INDFUT' name='MINI'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='LinearMA' backtest ='false'/>
+      <signals signal='MeanRev_360_4_3' backtest ='false'/>
+      <signals signal='MeanRev_450_4_3' backtest ='false'/>
+      <signals signal='MeanRev_690_4_3' backtest ='false'/>
+    </symbols>
+    <symbols serie='DOLFUT' name='FULL'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='Filters' backtest ='false'/>
+      <signals signal='Convergence_1080_4_3' backtest ='false'/>
+      <signals signal='Convergence_1800_4_3' backtest ='false'/>
+    </symbols>
+    <symbols serie='DOLFUT' name='MINI'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='Filters' backtest ='false'/>
+      <signals signal='Convergence_1080_4_3' backtest ='false'/>
+      <signals signal='Convergence_1800_4_3' backtest ='false'/>
+    </symbols>
+  </marketdata>
+  
+  <riskaccounts account='MASTER_AT' history='3' from='2020-10-01'
+                simulated='false' db='dbaccounts'> 
+    <riskstrategies strategy='MeanRev_360_4_3'>
+      <riskpositions serie='INDFUT' name='FULL' 
+                     alocation='100000000' stop='0.02' period='0'/>
+      <riskpositions serie='INDFUT' name='MINI' 
+                     alocation='100000000' stop='0.02' period='0'/>
+    </riskstrategies>
+    <riskstrategies strategy='MeanRev_450_4_3'>
+      <riskpositions serie='INDFUT' name='FULL' 
+                     alocation='100000000' stop='0.02' period='0'/>
+      <riskpositions serie='INDFUT' name='MINI' 
+                     alocation='100000000' stop='0.02' period='0'/>
+    </riskstrategies>
+    <riskstrategies strategy='MeanRev_690_4_3'>
+      <riskpositions serie='INDFUT' name='FULL' 
+                     alocation='100000000' stop='0.02' period='0'/>
+      <riskpositions serie='INDFUT' name='MINI' 
+                     alocation='100000000' stop='0.02' period='0'/>
+    </riskstrategies>
+    <riskstrategies strategy='Convergence_1080_4_3'>
+      <riskpositions serie='DOLFUT' name='MINI' 
+                     alocation='63000000' stop='0.02' period='0'/>
+      <riskpositions serie='DOLFUT' name='FULL' 
+                     alocation='63000000' stop='0.02' period='0'/>
+    </riskstrategies>
+    <riskstrategies strategy='Convergence_1800_4_3'>
+      <riskpositions serie='DOLFUT' name='MINI' 
+                     alocation='63000000' stop='0.02' period='0'/>
+      <riskpositions serie='DOLFUT' name='FULL' 
+                     alocation='63000000' stop='0.02' period='0'/>
+    </riskstrategies>
+    <oms  oms='VIRTUAL'   db='dbaccounts' active='false'/>
+    <oms  oms='ALETHEIA' db='dbaccounts' active='true'/>
+  </riskaccounts>
+  
+</matlab>

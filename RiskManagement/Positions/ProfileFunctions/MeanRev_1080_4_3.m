@@ -1,4 +1,4 @@
-function MeanRev_1080_4_3( Position )
+0function MeanRev_1080_4_3( Position )
   symbol = Position.Symbol;
   n=symbol.n;
   quotes = Position.Main.quotes;

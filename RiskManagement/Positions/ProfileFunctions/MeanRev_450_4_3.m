@@ -45,9 +45,9 @@ function MeanRev_450_4_3( Position )
     
     % constroi as curvas de histerese na entrada e saida do trade
     % curvas de entrada e saida long
-    maxlongp = -sigref*sigMA*avgp+avgp;
+    maxlongp = round((-sigref*sigMA*avgp+avgp)/symbol.ticksize)*symbol.ticksize;
     maxlongpx = round(maxlongp/symbol.ticksize);
-    maxshortp = sigref*sigMA*avgp+avgp;
+    maxshortp = round((sigref*sigMA*avgp+avgp)/symbol.ticksize)*symbol.ticksize;
     maxshortpx = round(maxshortp/symbol.ticksize);
     steppx = abs(inLong-outLong)/abs(maxlongpx-avgpx);
     xLong = inLong:steppx:outLong;
@@ -57,10 +57,10 @@ function MeanRev_450_4_3( Position )
     outLongRef = outLongRef.*contracts;
     
     % curvas de entrada e saida short
-    maxshortp = -sigref*sigMA*avgp+avgp;
-    maxshortpx = round(maxshortp/symbol.ticksize);
-    maxshortp = sigref*sigMA*avgp+avgp;
-    maxshortpx = round(maxshortp/symbol.ticksize);
+%    maxshortp = -sigref*sigMA*avgp+avgp;
+%    maxshortpx = round(maxshortp/symbol.ticksize);
+%    maxshortp = sigref*sigMA*avgp+avgp;
+%    maxshortpx = round(maxshortp/symbol.ticksize);
     steppx = abs(inShort-outShort)/abs(maxshortpx-avgpx);
     xShort = outShort:steppx:inShort;
     inShortRef =...
@@ -114,6 +114,8 @@ function MeanRev_450_4_3( Position )
         Position.setpositionprofile(maxshortpx+1:end) = -contracts;
       end
     end
+    
+    PostProfile();
     %
     %% SET REQTRADE
     Position.reqorders(:,pcol.value) = 0;
@@ -179,4 +181,28 @@ function MeanRev_450_4_3( Position )
       Position.reqorders(2,pcol.value) = bidqty;
     end
   end
+    function PostProfile()
+        nlines = 0;
+        values = '';
+        try
+        for i=maxlongpx:maxshortpx
+            pr = maxlongp + (i - maxlongpx) * symbol.ticksize;
+            line = sprintf(' ROW(''%s'',%f, %f),', Position.Strategy.strategy, pr , Position.setpositionprofile(i));
+            values = strcat(values, line);
+            nlines = nlines + 1;
+            if nlines >= 100 || i== maxshortpx
+                query = 'REPLACE INTO dbrealtime.RT_PROFILE( STRATEGY, CHAVE, VALOR) VALUES ';
+                query = strcat(query, values(1:end-1));
+                query = strcat(query, ';');
+                h = mysql( 'open', Position.Main.db.dbconfig.host, Position.Main.db.dbconfig.user, Position.Main.db.dbconfig.password);
+                ninsert = mysql(query);
+                mysql('close')
+                nlines = 0;
+                values = '';
+            end
+        end
+        catch me
+            disp(me.message)
+        end
+    end
 end

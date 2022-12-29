@@ -1,4 +1,4 @@
-function MeanRev_690_4_3( Position )
+function MeanRev_3600_4_3( Position )
   symbol = Position.Symbol;
   n=symbol.n;
   quotes = Position.Main.quotes;
@@ -6,7 +6,7 @@ function MeanRev_690_4_3( Position )
   firstbar= quotes.firstbar(end);
   lb= quotes.lastbar(n,end);
   
-  tauMA = 690*1;sigref = 4;spread = 3; slip=2;
+  tauMA = 3600*1;sigref = 4;spread = 3; slip=2;
   nma = find(symbol.filters.tau == tauMA);
   sigMA = symbol.filters.sig(end,nma);
   %nnidx = symbol.filters.sig(:,nma)~=0;
@@ -57,10 +57,10 @@ function MeanRev_690_4_3( Position )
     outLongRef = outLongRef.*contracts;
     
     % curvas de entrada e saida short
-%    maxshortp = -sigref*sigMA*avgp+avgp;
-%    maxshortpx = round(maxshortp/symbol.ticksize);
-%    maxshortp = sigref*sigMA*avgp+avgp;
-%    maxshortpx = round(maxshortp/symbol.ticksize);
+    maxshortp = -sigref*sigMA*avgp+avgp;
+    maxshortpx = round(maxshortp/symbol.ticksize);
+    maxshortp = sigref*sigMA*avgp+avgp;
+    maxshortpx = round(maxshortp/symbol.ticksize);
     steppx = abs(inShort-outShort)/abs(maxshortpx-avgpx);
     xShort = outShort:steppx:inShort;
     inShortRef =...
@@ -116,6 +116,7 @@ function MeanRev_690_4_3( Position )
     end
     
     PostProfile();
+    
     %
     %% SET REQTRADE
     Position.reqorders(:,pcol.value) = 0;
@@ -180,18 +181,20 @@ function MeanRev_690_4_3( Position )
       Position.reqorders(2,pcol.price) =bidpx;
       Position.reqorders(2,pcol.value) = bidqty;
     end
+    %disp(['idx: ', sprintf('%4.3f', round(mid/symbol.ticksize)), ' mid: ', sprintf('%4.3f',mid), ' profile: ', sprintf('%4.3f',Position.setpositionprofile(round(mid/symbol.ticksize)))])
   end
+  
     function PostProfile()
         nlines = 0;
         values = '';
         try
         for i=maxlongpx:maxshortpx
             pr = maxlongp + (i - maxlongpx) * symbol.ticksize;
-            line = sprintf(' ROW(''%s'',%0.3f, %f),', Position.Strategy.strategy, pr , Position.setpositionprofile(i));
+            line = sprintf(' ROW(''%s'',%f, %f),', Position.Strategy.strategy, pr , Position.setpositionprofile(i));
             values = strcat(values, line);
             nlines = nlines + 1;
             if nlines >= 100 || i== maxshortpx
-                query = 'REPLACE INTO dbrealtime.RT_PROFILE( STRATEGY, CHAVE, VALOR ) VALUES ';
+                query = 'REPLACE INTO dbrealtime.RT_PROFILE( STRATEGY, CHAVE, VALOR) VALUES ';
                 query = strcat(query, values(1:end-1));
                 query = strcat(query, ';');
                 h = mysql( 'open', Position.Main.db.dbconfig.host, Position.Main.db.dbconfig.user, Position.Main.db.dbconfig.password);

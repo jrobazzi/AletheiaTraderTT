@@ -1,0 +1,29 @@
+<matlab instance = 'KPTLInitRT' version='MatrixTrader v2' history='250'>
+  
+ <db schema = 'dbconfig' 
+      host = '10.40.20.12:3306'  user = 'aletheia'  password = 'x.K]>"!S4p' />
+  <db schema = 'dbmarket' folder = 'Z:/Aletheia/'/>
+  <db schema = 'dbaccounts' folder = 'Z:/Aletheia/'
+      host = '10.40.20.12:3306'  user = 'aletheia'  password = 'x.K]>"!S4p' />
+  
+  <marketdata period='S15' marketdata='auto' db='dbmarket'>
+    <symbols serie='INDFUT' name='MINI'>
+      <mdpricemarket/>
+      <mdtrades history='1'/>
+      <signals signal='LinearMA' backtest ='false'/>
+      <signals signal='MeanRev_690_4_3' backtest ='false'/>
+    </symbols>
+  </marketdata>
+  
+  <riskaccounts account='MASTERKPTL' history='3' from='2019-06-11'
+                simulated='false' db='dbaccounts'> 
+    <riskstrategies strategy='MeanRev_690_4_3'>
+      <riskpositions serie='INDFUT' name='MINI' 
+                     alocation='60000000' stop='0.02' period='0'/>
+    </riskstrategies>
+    <oms  oms='VIRTUAL'   db='dbaccounts' active='false'/>
+    <oms  oms='XP_FIXBMF' db='dbaccounts' active='true'/>
+    <oms  oms='GID_FIXBMF' db='dbaccounts' active='false'/>
+  </riskaccounts>
+  
+</matlab>

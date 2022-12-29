@@ -19,7 +19,8 @@ classdef RiskPositions < handle
     
     REQSIZE = 50000;
     REPORTSIZE = 50000;
-    TRADESIZE = 10000;
+    %TRADESIZE = 10000;
+    TRADESIZE = 20000;
     
     PROFILESIZE = 30000; % alterado por abend no profileposition graph
   end 
@@ -539,7 +540,10 @@ classdef RiskPositions < handle
           this.trades(this.ntrades,tcol.time) = symbol.Main.quotes.time(end);
           this.trades(this.ntrades,tcol.price) = inim2m;
           this.trades(this.ntrades,tcol.value) = inicts;
-        catch
+        catch ME
+            disp('')
+            disp('Error Initializing positions. Message: ')
+            disp(ME.message)
         end
       end
       
@@ -786,9 +790,16 @@ classdef RiskPositions < handle
           gmt = this.Main.gmtvec(this.Main.tradedatevec==currdate);
           %tadj = this.trades(p,tcol.timestamp)-datenum(0,0,0,gmt,0,0);
           tadj = this.trades(p,tcol.timestamp);
+          %tadj = this.trades(p,tcol.time);
           tid = ceil(tadj/symbol.Main.quotes.dt);
           if tid>symbol.Main.quotes.timeid(1)
+              if p==476
+                  disp('cheguei')
+              end
             tid = find(symbol.Main.quotes.timeid>=tid,1,'first');
+            if isempty(tid)
+                tid = max(symbol.Main.quotes.timeid);
+            end
             this.trades(p,tcol.id) = tid;
             symbol.positions.contracts(np,tid:end) = this.contracts(p);
             symbol.positions.avgprice(np,tid:end) = this.avgprice(p);

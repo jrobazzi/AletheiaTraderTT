@@ -996,7 +996,7 @@ classdef MarketMain < handle
         this.plottime = tic;
         while(~this.sim_stop)
           if this.sim_pause
-            pause(0.5);
+            pause(0.1);
             drawnow;
             %handles = guidata(this.hObject);
             this.sim_stop = this.handles.sim_stop;
